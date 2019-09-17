@@ -1,0 +1,30 @@
+---
+title: "Music Insights"
+author: "Reece Resendez"
+output: html_notebook
+---
+
+First, we need tidyverse to handle the data importing and wrangling
+Since we already have it installed on this system we can go ahead and implement it.
+
+```{r}
+
+suppressMessages(library(tidyverse))
+
+survey <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/music-survey.csv")
+
+preferences <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/preferences-survey.csv")
+
+nrow(survey)
+ncol(survey)
+colnames(survey)
+colnames(survey)[colnames(survey) == "First, we are going to create a pseudonym for you to keep this survey anonymous (more or less). Which pseudonym generator would you prefer?"] <- "Generator_name"
+colnames(survey)[colnames(survey) == "What is your pseudonym?"  ] <- "pseudonym"
+
+colnames(survey)[colnames(survey) == "Which musical instruments/talents do you play? (Select all that apply)" ] <- "Instrument_pref"
+
+
+colnames(survey)[colnames(survey) == "Year you were born (YYYY)"  ] <- "YOB"
+
+```
+
