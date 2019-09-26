@@ -244,28 +244,31 @@ $(document).ready(function () {
 <p>First, we need tidyverse to handle the data importing and wrangling Since we already have it installed on this system we can go ahead and implement it.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29sbmFtZXMoc3VydmV5KVxuXG5gYGAifQ== -->
-<pre class="r"><code>colnames(survey)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFyc2VfZGF0ZXRpbWUoc3VydmV5JFRpbWVzdGFtcClcblxuYGBgIn0= -->
+<pre class="r"><code>parse_datetime(survey$Timestamp)
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcIlRpbWVzdGFtcFwiICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFsyXSBcIkdlbmVyYXRvcl9uYW1lXCIgICAgICAgICAgICAgICAgICAgIFxuIFszXSBcInBzZXVkb255bVwiICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs0XSBcIlNleFwiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs1XSBcIk1ham9yXCIgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs2XSBcIkFjYWRlbWljIFllYXJcIiAgICAgICAgICAgICAgICAgICAgIFxuIFs3XSBcIllPQlwiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIFs4XSBcIkluc3RydW1lbnRfcHJlZlwiICAgICAgICAgICAgICAgICAgIFxuIFs5XSBcIkFydGlzdFwiICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzEwXSBcIlNvbmdcIiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuWzExXSBcIkxpbmsgdG8gc29uZyAob24gWW91dHViZSBvciBWaW1lbylcIlxuIn0= -->
-<pre><code> [1] &quot;Timestamp&quot;                         
- [2] &quot;Generator_name&quot;                    
- [3] &quot;pseudonym&quot;                         
- [4] &quot;Sex&quot;                               
- [5] &quot;Major&quot;                             
- [6] &quot;Academic Year&quot;                     
- [7] &quot;YOB&quot;                               
- [8] &quot;Instrument_pref&quot;                   
- [9] &quot;Artist&quot;                            
-[10] &quot;Song&quot;                              
-[11] &quot;Link to song (on Youtube or Vimeo)&quot;</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiNDQgcGFyc2luZyBmYWlsdXJlcy5cbnJvdyBjb2wgICBleHBlY3RlZCAgICAgICAgYWN0dWFsXG4gIDEgIC0tIGRhdGUgbGlrZSAgOC8yNy8xOSAyMDoyMlxuICAyICAtLSBkYXRlIGxpa2UgIDgvMjkvMTkgMTI6MTVcbiAgMyAgLS0gZGF0ZSBsaWtlICA4LzI4LzE5IDE5OjMzXG4gIDQgIC0tIGRhdGUgbGlrZSAgOC8yOS8xOSAxNjoyNVxuICA1ICAtLSBkYXRlIGxpa2UgIDgvMjcvMTkgMTU6NDBcbi4uLiAuLi4gLi4uLi4uLi4uLiAuLi4uLi4uLi4uLi4uXG5TZWUgcHJvYmxlbXMoLi4uKSBmb3IgbW9yZSBkZXRhaWxzLlxuIn0= -->
+<pre><code>44 parsing failures.
+row col   expected        actual
+  1  -- date like  8/27/19 20:22
+  2  -- date like  8/29/19 12:15
+  3  -- date like  8/28/19 19:33
+  4  -- date like  8/29/19 16:25
+  5  -- date like  8/27/19 15:40
+... ... .......... .............
+See problems(...) for more details.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQVxuWzIyXSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQVxuWzQzXSBOQSBOQVxuIn0= -->
+<pre><code> [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+[22] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+[43] NA NA</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIk11c2ljIEluc2lnaHRzIg0KYXV0aG9yOiAiUmVlY2UgUmVzZW5kZXoiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpGaXJzdCwgd2UgbmVlZCB0aWR5dmVyc2UgdG8gaGFuZGxlIHRoZSBkYXRhIGltcG9ydGluZyBhbmQgd3JhbmdsaW5nDQpTaW5jZSB3ZSBhbHJlYWR5IGhhdmUgaXQgaW5zdGFsbGVkIG9uIHRoaXMgc3lzdGVtIHdlIGNhbiBnbyBhaGVhZCBhbmQgaW1wbGVtZW50IGl0Lg0KDQpgYGB7cn0NCg0Kc3VwcHJlc3NNZXNzYWdlcyhsaWJyYXJ5KHRpZHl2ZXJzZSkpDQoNCnN1cnZleSA8LSByZWFkX2NzdigiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2ludHJvZHNjaS9NdXNpY1N1cnZleS9tYXN0ZXIvbXVzaWMtc3VydmV5LmNzdiIpDQoNCnByZWZlcmVuY2VzIDwtIHJlYWRfY3N2KCJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vaW50cm9kc2NpL011c2ljU3VydmV5L21hc3Rlci9wcmVmZXJlbmNlcy1zdXJ2ZXkuY3N2IikNCg0KbnJvdyhzdXJ2ZXkpDQpuY29sKHN1cnZleSkNCmNvbG5hbWVzKHN1cnZleSkNCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiRmlyc3QsIHdlIGFyZSBnb2luZyB0byBjcmVhdGUgYSBwc2V1ZG9ueW0gZm9yIHlvdSB0byBrZWVwIHRoaXMgc3VydmV5IGFub255bW91cyAobW9yZSBvciBsZXNzKS4gV2hpY2ggcHNldWRvbnltIGdlbmVyYXRvciB3b3VsZCB5b3UgcHJlZmVyPyJdIDwtICJHZW5lcmF0b3JfbmFtZSINCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiV2hhdCBpcyB5b3VyIHBzZXVkb255bT8iICBdIDwtICJwc2V1ZG9ueW0iDQoNCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiV2hpY2ggbXVzaWNhbCBpbnN0cnVtZW50cy90YWxlbnRzIGRvIHlvdSBwbGF5PyAoU2VsZWN0IGFsbCB0aGF0IGFwcGx5KSIgXSA8LSAiSW5zdHJ1bWVudF9wcmVmIg0KDQoNCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiWWVhciB5b3Ugd2VyZSBib3JuIChZWVlZKSIgIF0gPC0gIllPQiINCg0KYGBgDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIk11c2ljIEluc2lnaHRzIg0KYXV0aG9yOiAiUmVlY2UgUmVzZW5kZXoiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpGaXJzdCwgd2UgbmVlZCB0aWR5dmVyc2UgdG8gaGFuZGxlIHRoZSBkYXRhIGltcG9ydGluZyBhbmQgd3JhbmdsaW5nDQpTaW5jZSB3ZSBhbHJlYWR5IGhhdmUgaXQgaW5zdGFsbGVkIG9uIHRoaXMgc3lzdGVtIHdlIGNhbiBnbyBhaGVhZCBhbmQgaW1wbGVtZW50IGl0Lg0KDQpgYGB7cn0NCg0Kc3VwcHJlc3NNZXNzYWdlcyhsaWJyYXJ5KHRpZHl2ZXJzZSkpDQoNCnN1cnZleSA8LSByZWFkX2NzdigiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2ludHJvZHNjaS9NdXNpY1N1cnZleS9tYXN0ZXIvbXVzaWMtc3VydmV5LmNzdiIpDQoNCnByZWZlcmVuY2VzIDwtIHJlYWRfY3N2KCJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vaW50cm9kc2NpL011c2ljU3VydmV5L21hc3Rlci9wcmVmZXJlbmNlcy1zdXJ2ZXkuY3N2IikNCg0KbnJvdyhzdXJ2ZXkpDQpuY29sKHN1cnZleSkNCmNvbG5hbWVzKHN1cnZleSkNCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiRmlyc3QsIHdlIGFyZSBnb2luZyB0byBjcmVhdGUgYSBwc2V1ZG9ueW0gZm9yIHlvdSB0byBrZWVwIHRoaXMgc3VydmV5IGFub255bW91cyAobW9yZSBvciBsZXNzKS4gV2hpY2ggcHNldWRvbnltIGdlbmVyYXRvciB3b3VsZCB5b3UgcHJlZmVyPyJdIDwtICJHZW5lcmF0b3JfbmFtZSINCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiV2hhdCBpcyB5b3VyIHBzZXVkb255bT8iICBdIDwtICJwc2V1ZG9ueW0iDQoNCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiV2hpY2ggbXVzaWNhbCBpbnN0cnVtZW50cy90YWxlbnRzIGRvIHlvdSBwbGF5PyAoU2VsZWN0IGFsbCB0aGF0IGFwcGx5KSIgXSA8LSAiSW5zdHJ1bWVudF9wcmVmIg0KDQoNCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiWWVhciB5b3Ugd2VyZSBib3JuIChZWVlZKSIgIF0gPC0gIllPQiINCg0KcGFyc2VfZGF0ZXRpbWUoc3VydmV5JFRpbWVzdGFtcCkNCg0KDQoNCg0KYGBgDQoNCg==</div>
 
 
 

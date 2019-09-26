@@ -26,5 +26,10 @@ colnames(survey)[colnames(survey) == "Which musical instruments/talents do you p
 
 colnames(survey)[colnames(survey) == "Year you were born (YYYY)"  ] <- "YOB"
 
+parse_datetime(survey$Timestamp)
+
+
+
+
 ```
 
