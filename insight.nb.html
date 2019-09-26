@@ -244,31 +244,85 @@ $(document).ready(function () {
 <p>First, we need tidyverse to handle the data importing and wrangling Since we already have it installed on this system we can go ahead and implement it.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFyc2VfZGF0ZXRpbWUoc3VydmV5JFRpbWVzdGFtcClcblxuYGBgIn0= -->
-<pre class="r"><code>parse_datetime(survey$Timestamp)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VwcHJlc3NNZXNzYWdlcyhsaWJyYXJ5KHRpZHl2ZXJzZSkpXG5zdXBwcmVzc01lc3NhZ2VzKHN1cnZleSA8LSByZWFkX2NzdihcImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9pbnRyb2RzY2kvTXVzaWNTdXJ2ZXkvbWFzdGVyL211c2ljLXN1cnZleS5jc3ZcIikpXG5zdXBwcmVzc01lc3NhZ2VzKHByZWZlcmVuY2VzIDwtIHJlYWRfY3N2KFwiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2ludHJvZHNjaS9NdXNpY1N1cnZleS9tYXN0ZXIvcHJlZmVyZW5jZXMtc3VydmV5LmNzdlwiKSlcbmBgYCJ9 -->
+<pre class="r"><code>suppressMessages(library(tidyverse))
+suppressMessages(survey &lt;- read_csv(&quot;https://raw.githubusercontent.com/introdsci/MusicSurvey/master/music-survey.csv&quot;))
+suppressMessages(preferences &lt;- read_csv(&quot;https://raw.githubusercontent.com/introdsci/MusicSurvey/master/preferences-survey.csv&quot;))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiNDQgcGFyc2luZyBmYWlsdXJlcy5cbnJvdyBjb2wgICBleHBlY3RlZCAgICAgICAgYWN0dWFsXG4gIDEgIC0tIGRhdGUgbGlrZSAgOC8yNy8xOSAyMDoyMlxuICAyICAtLSBkYXRlIGxpa2UgIDgvMjkvMTkgMTI6MTVcbiAgMyAgLS0gZGF0ZSBsaWtlICA4LzI4LzE5IDE5OjMzXG4gIDQgIC0tIGRhdGUgbGlrZSAgOC8yOS8xOSAxNjoyNVxuICA1ICAtLSBkYXRlIGxpa2UgIDgvMjcvMTkgMTU6NDBcbi4uLiAuLi4gLi4uLi4uLi4uLiAuLi4uLi4uLi4uLi4uXG5TZWUgcHJvYmxlbXMoLi4uKSBmb3IgbW9yZSBkZXRhaWxzLlxuIn0= -->
-<pre><code>44 parsing failures.
-row col   expected        actual
-  1  -- date like  8/27/19 20:22
-  2  -- date like  8/29/19 12:15
-  3  -- date like  8/28/19 19:33
-  4  -- date like  8/29/19 16:25
-  5  -- date like  8/27/19 15:40
-... ... .......... .............
-See problems(...) for more details.</code></pre>
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Now we want to go ahead and update all the column names for each of the dataframes to make referencing and appearance look better.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29sbmFtZXMoc3VydmV5KVtjb2xuYW1lcyhzdXJ2ZXkpID09IFwiRmlyc3QsIHdlIGFyZSBnb2luZyB0byBjcmVhdGUgYSBwc2V1ZG9ueW0gZm9yIHlvdSB0byBrZWVwIHRoaXMgc3VydmV5IGFub255bW91cyAobW9yZSBvciBsZXNzKS4gV2hpY2ggcHNldWRvbnltIGdlbmVyYXRvciB3b3VsZCB5b3UgcHJlZmVyP1wiXSA8LSBcInBzZXVkb255bV9nZW5lcmF0b3JcIlxuY29sbmFtZXMoc3VydmV5KVtjb2xuYW1lcyhzdXJ2ZXkpID09IFwiV2hhdCBpcyB5b3VyIHBzZXVkb255bT9cIiAgXSA8LSBcInBzZXVkb255bVwiXG5jb2xuYW1lcyhzdXJ2ZXkpW2NvbG5hbWVzKHN1cnZleSkgPT0gXCJTZXhcIl0gPC0gXCJzZXhcIlxuY29sbmFtZXMoc3VydmV5KVtjb2xuYW1lcyhzdXJ2ZXkpID09IFwiTWFqb3JcIl0gPC0gXCJhY2FkZW1pY19tYWpvclwiXG5jb2xuYW1lcyhzdXJ2ZXkpW2NvbG5hbWVzKHN1cnZleSkgPT0gXCJXaGljaCBtdXNpY2FsIGluc3RydW1lbnRzL3RhbGVudHMgZG8geW91IHBsYXk/IChTZWxlY3QgYWxsIHRoYXQgYXBwbHkpXCIgXSA8LSBcImluc3RydW1lbnRfbGlzdFwiXG5jb2xuYW1lcyhzdXJ2ZXkpW2NvbG5hbWVzKHN1cnZleSkgPT0gXCJZZWFyIHlvdSB3ZXJlIGJvcm4gKFlZWVkpXCIgIF0gPC0gXCJ5ZWFyX2Jvcm5cIlxuY29sbmFtZXMoc3VydmV5KVtjb2xuYW1lcyhzdXJ2ZXkpID09IFwiQWNhZGVtaWMgWWVhclwiXSA8LSBcImFjYWRlbWljX2xldmVsXCJcbmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSBcIllPQlwiXSA8LSBcInllYXJfYm9yblwiXG5jb2xuYW1lcyhzdXJ2ZXkpW2NvbG5hbWVzKHN1cnZleSkgPT0gXCJBcnRpc3RcIl0gPC0gXCJmYXZvcml0ZV9zb25nX2FydGlzdFwiXG5jb2xuYW1lcyhzdXJ2ZXkpW2NvbG5hbWVzKHN1cnZleSkgPT0gXCJTb25nXCJdIDwtIFwiZmF2b3JpdGVfc29uZ1wiXG5jb2xuYW1lcyhzdXJ2ZXkpW2NvbG5hbWVzKHN1cnZleSkgPT0gXCJMaW5rIHRvIHNvbmcgKG9uIFlvdXR1YmUgb3IgVmltZW8pXCJdIDwtIFwiZmF2b3JpdGVfc29uZ19saW5rXCJcbmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSBcIlRpbWVzdGFtcFwiXSA8LSBcInRpbWVfc3VibWl0dGVkXCJcbmNvbG5hbWVzKHN1cnZleSlcbmBgYCJ9 -->
+<pre class="r"><code>colnames(survey)[colnames(survey) == &quot;First, we are going to create a pseudonym for you to keep this survey anonymous (more or less). Which pseudonym generator would you prefer?&quot;] &lt;- &quot;pseudonym_generator&quot;
+colnames(survey)[colnames(survey) == &quot;What is your pseudonym?&quot;  ] &lt;- &quot;pseudonym&quot;
+colnames(survey)[colnames(survey) == &quot;Sex&quot;] &lt;- &quot;sex&quot;
+colnames(survey)[colnames(survey) == &quot;Major&quot;] &lt;- &quot;academic_major&quot;
+colnames(survey)[colnames(survey) == &quot;Which musical instruments/talents do you play? (Select all that apply)&quot; ] &lt;- &quot;instrument_list&quot;
+colnames(survey)[colnames(survey) == &quot;Year you were born (YYYY)&quot;  ] &lt;- &quot;year_born&quot;
+colnames(survey)[colnames(survey) == &quot;Academic Year&quot;] &lt;- &quot;academic_level&quot;
+colnames(survey)[colnames(survey) == &quot;YOB&quot;] &lt;- &quot;year_born&quot;
+colnames(survey)[colnames(survey) == &quot;Artist&quot;] &lt;- &quot;favorite_song_artist&quot;
+colnames(survey)[colnames(survey) == &quot;Song&quot;] &lt;- &quot;favorite_song&quot;
+colnames(survey)[colnames(survey) == &quot;Link to song (on Youtube or Vimeo)&quot;] &lt;- &quot;favorite_song_link&quot;
+colnames(survey)[colnames(survey) == &quot;Timestamp&quot;] &lt;- &quot;time_submitted&quot;
+colnames(survey)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcInRpbWVfc3VibWl0dGVkXCIgICAgICAgXCJwc2V1ZG9ueW1fZ2VuZXJhdG9yXCIgXG4gWzNdIFwicHNldWRvbnltXCIgICAgICAgICAgICBcInNleFwiICAgICAgICAgICAgICAgICBcbiBbNV0gXCJhY2FkZW1pY19tYWpvclwiICAgICAgIFwiYWNhZGVtaWNfbGV2ZWxcIiAgICAgIFxuIFs3XSBcInllYXJfYm9yblwiICAgICAgICAgICAgXCJpbnN0cnVtZW50X2xpc3RcIiAgICAgXG4gWzldIFwiZmF2b3JpdGVfc29uZ19hcnRpc3RcIiBcImZhdm9yaXRlX3NvbmdcIiAgICAgICBcblsxMV0gXCJmYXZvcml0ZV9zb25nX2xpbmtcIiAgXG4ifQ== -->
+<pre><code> [1] &quot;time_submitted&quot;       &quot;pseudonym_generator&quot; 
+ [3] &quot;pseudonym&quot;            &quot;sex&quot;                 
+ [5] &quot;academic_major&quot;       &quot;academic_level&quot;      
+ [7] &quot;year_born&quot;            &quot;instrument_list&quot;     
+ [9] &quot;favorite_song_artist&quot; &quot;favorite_song&quot;       
+[11] &quot;favorite_song_link&quot;  </code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQVxuWzIyXSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQSBOQVxuWzQzXSBOQSBOQVxuIn0= -->
-<pre><code> [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
-[22] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
-[43] NA NA</code></pre>
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>We want to make the code tidy so we are going to use two packages that come with tidyverse but need to be loaded in to work.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VwcHJlc3NNZXNzYWdlcyhsaWJyYXJ5KGRwbHlyKSlcbnN1cHByZXNzTWVzc2FnZXMobGlicmFyeSh0aWR5cikpXG5gYGAifQ== -->
+<pre class="r"><code>suppressMessages(library(dplyr))
+suppressMessages(library(tidyr))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Now we are going to move into creating seperate tables from these two dataframes we have. We will do this by using dplyr and tibbles</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuUGVyc29uIDwtIHRpYmJsZSh0aW1lX3N1Ym1pdHRlZCA9IHN1cnZleSR0aW1lX3N1Ym1pdHRlZCxcbiAgIHBzZXVkb255bV9nZW5lcmF0b3IgPSBzdXJ2ZXkkcHNldWRvbnltX2dlbmVyYXRvcixcbiAgIHBzZXVkb255bSA9IHN1cnZleSRwc2V1ZG9ueW0sXG4gICBzZXggPSBzdXJ2ZXkkc2V4LFxuICAgeWVhcl9ib3JuID0gc3VydmV5JHllYXJfYm9ybiwgXG4gICBhY2FkZW1pY19sZXZlbCA9IHN1cnZleSRhY2FkZW1pY19sZXZlbCxcbiAgIGFjYWRlbWljX21ham9yID0gc3VydmV5JGFjYWRlbWljX21ham9yKVxuY29sbmFtZXMoUGVyc29uKVxuYGBgIn0= -->
+<pre class="r"><code>Person &lt;- tibble(time_submitted = survey$time_submitted,
+   pseudonym_generator = survey$pseudonym_generator,
+   pseudonym = survey$pseudonym,
+   sex = survey$sex,
+   year_born = survey$year_born, 
+   academic_level = survey$academic_level,
+   academic_major = survey$academic_major)
+colnames(Person)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwidGltZV9zdWJtaXR0ZWRcIiAgICAgIFwicHNldWRvbnltX2dlbmVyYXRvclwiXG5bM10gXCJwc2V1ZG9ueW1cIiAgICAgICAgICAgXCJzZXhcIiAgICAgICAgICAgICAgICBcbls1XSBcInllYXJfYm9yblwiICAgICAgICAgICBcImFjYWRlbWljX2xldmVsXCIgICAgIFxuWzddIFwiYWNhZGVtaWNfbWFqb3JcIiAgICAgXG4ifQ== -->
+<pre><code>[1] &quot;time_submitted&quot;      &quot;pseudonym_generator&quot;
+[3] &quot;pseudonym&quot;           &quot;sex&quot;                
+[5] &quot;year_born&quot;           &quot;academic_level&quot;     
+[7] &quot;academic_major&quot;     </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLVxuRmF2b3JpdGVTb25nIDwtIHRpYmJsZShwc2V1ZG9ueW0gPSBzdXJ2ZXkkcHNldWRvbnltLFxuICAgICAgc29uZ19hcnRpc3QgPSBzdXJ2ZXkkZmF2b3JpdGVfc29uZ19hcnRpc3QsXG4gICAgICBmYXZvcml0ZV9zb25nID0gc3VydmV5JGZhdm9yaXRlX3NvbmcsXG4gICAgICBzb25nX2xpbmsgPSBzdXJ2ZXkkZmF2b3JpdGVfc29uZ19saW5rKVxuY29sbmFtZXMoRmF2b3JpdGVTb25nKVxuYGBgIn0= -->
+<pre class="r"><code>#------------------------------------------------------------------
+FavoriteSong &lt;- tibble(pseudonym = survey$pseudonym,
+      song_artist = survey$favorite_song_artist,
+      favorite_song = survey$favorite_song,
+      song_link = survey$favorite_song_link)
+colnames(FavoriteSong)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwicHNldWRvbnltXCIgICAgIFwic29uZ19hcnRpc3RcIiAgIFwiZmF2b3JpdGVfc29uZ1wiIFwic29uZ19saW5rXCIgICAgXG4ifQ== -->
+<pre><code>[1] &quot;pseudonym&quot;     &quot;song_artist&quot;   &quot;favorite_song&quot; &quot;song_link&quot;    </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIk11c2ljIEluc2lnaHRzIg0KYXV0aG9yOiAiUmVlY2UgUmVzZW5kZXoiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpGaXJzdCwgd2UgbmVlZCB0aWR5dmVyc2UgdG8gaGFuZGxlIHRoZSBkYXRhIGltcG9ydGluZyBhbmQgd3JhbmdsaW5nDQpTaW5jZSB3ZSBhbHJlYWR5IGhhdmUgaXQgaW5zdGFsbGVkIG9uIHRoaXMgc3lzdGVtIHdlIGNhbiBnbyBhaGVhZCBhbmQgaW1wbGVtZW50IGl0Lg0KDQpgYGB7cn0NCg0Kc3VwcHJlc3NNZXNzYWdlcyhsaWJyYXJ5KHRpZHl2ZXJzZSkpDQoNCnN1cnZleSA8LSByZWFkX2NzdigiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2ludHJvZHNjaS9NdXNpY1N1cnZleS9tYXN0ZXIvbXVzaWMtc3VydmV5LmNzdiIpDQoNCnByZWZlcmVuY2VzIDwtIHJlYWRfY3N2KCJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vaW50cm9kc2NpL011c2ljU3VydmV5L21hc3Rlci9wcmVmZXJlbmNlcy1zdXJ2ZXkuY3N2IikNCg0KbnJvdyhzdXJ2ZXkpDQpuY29sKHN1cnZleSkNCmNvbG5hbWVzKHN1cnZleSkNCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiRmlyc3QsIHdlIGFyZSBnb2luZyB0byBjcmVhdGUgYSBwc2V1ZG9ueW0gZm9yIHlvdSB0byBrZWVwIHRoaXMgc3VydmV5IGFub255bW91cyAobW9yZSBvciBsZXNzKS4gV2hpY2ggcHNldWRvbnltIGdlbmVyYXRvciB3b3VsZCB5b3UgcHJlZmVyPyJdIDwtICJHZW5lcmF0b3JfbmFtZSINCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiV2hhdCBpcyB5b3VyIHBzZXVkb255bT8iICBdIDwtICJwc2V1ZG9ueW0iDQoNCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiV2hpY2ggbXVzaWNhbCBpbnN0cnVtZW50cy90YWxlbnRzIGRvIHlvdSBwbGF5PyAoU2VsZWN0IGFsbCB0aGF0IGFwcGx5KSIgXSA8LSAiSW5zdHJ1bWVudF9wcmVmIg0KDQoNCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiWWVhciB5b3Ugd2VyZSBib3JuIChZWVlZKSIgIF0gPC0gIllPQiINCg0KcGFyc2VfZGF0ZXRpbWUoc3VydmV5JFRpbWVzdGFtcCkNCg0KDQoNCg0KYGBgDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIk11c2ljIEluc2lnaHRzIg0KYXV0aG9yOiAiUmVlY2UgUmVzZW5kZXoiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpGaXJzdCwgd2UgbmVlZCB0aWR5dmVyc2UgdG8gaGFuZGxlIHRoZSBkYXRhIGltcG9ydGluZyBhbmQgd3JhbmdsaW5nDQpTaW5jZSB3ZSBhbHJlYWR5IGhhdmUgaXQgaW5zdGFsbGVkIG9uIHRoaXMgc3lzdGVtIHdlIGNhbiBnbyBhaGVhZCBhbmQgaW1wbGVtZW50IGl0Lg0KYGBge3J9DQpzdXBwcmVzc01lc3NhZ2VzKGxpYnJhcnkodGlkeXZlcnNlKSkNCg0Kc3VwcHJlc3NNZXNzYWdlcyhzdXJ2ZXkgPC0gcmVhZF9jc3YoImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9pbnRyb2RzY2kvTXVzaWNTdXJ2ZXkvbWFzdGVyL211c2ljLXN1cnZleS5jc3YiKSkNCg0Kc3VwcHJlc3NNZXNzYWdlcyhwcmVmZXJlbmNlcyA8LSByZWFkX2NzdigiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2ludHJvZHNjaS9NdXNpY1N1cnZleS9tYXN0ZXIvcHJlZmVyZW5jZXMtc3VydmV5LmNzdiIpKQ0KDQpgYGANCk5vdyB3ZSB3YW50IHRvIGdvIGFoZWFkIGFuZCB1cGRhdGUgYWxsIHRoZSBjb2x1bW4gbmFtZXMgZm9yIGVhY2ggb2YgdGhlIGRhdGFmcmFtZXMgdG8gbWFrZSByZWZlcmVuY2luZyBhbmQgYXBwZWFyYW5jZSBsb29rIGJldHRlci4NCmBgYHtyfQ0KY29sbmFtZXMoc3VydmV5KVtjb2xuYW1lcyhzdXJ2ZXkpID09ICJGaXJzdCwgd2UgYXJlIGdvaW5nIHRvIGNyZWF0ZSBhIHBzZXVkb255bSBmb3IgeW91IHRvIGtlZXAgdGhpcyBzdXJ2ZXkgYW5vbnltb3VzIChtb3JlIG9yIGxlc3MpLiBXaGljaCBwc2V1ZG9ueW0gZ2VuZXJhdG9yIHdvdWxkIHlvdSBwcmVmZXI/Il0gPC0gInBzZXVkb255bV9nZW5lcmF0b3IiDQoNCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiV2hhdCBpcyB5b3VyIHBzZXVkb255bT8iICBdIDwtICJwc2V1ZG9ueW0iDQoNCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiU2V4Il0gPC0gInNleCINCg0KY29sbmFtZXMoc3VydmV5KVtjb2xuYW1lcyhzdXJ2ZXkpID09ICJNYWpvciJdIDwtICJhY2FkZW1pY19tYWpvciINCg0KY29sbmFtZXMoc3VydmV5KVtjb2xuYW1lcyhzdXJ2ZXkpID09ICJXaGljaCBtdXNpY2FsIGluc3RydW1lbnRzL3RhbGVudHMgZG8geW91IHBsYXk/IChTZWxlY3QgYWxsIHRoYXQgYXBwbHkpIiBdIDwtICJpbnN0cnVtZW50X2xpc3QiDQoNCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiWWVhciB5b3Ugd2VyZSBib3JuIChZWVlZKSIgIF0gPC0gInllYXJfYm9ybiINCg0KY29sbmFtZXMoc3VydmV5KVtjb2xuYW1lcyhzdXJ2ZXkpID09ICJBY2FkZW1pYyBZZWFyIl0gPC0gImFjYWRlbWljX2xldmVsIg0KDQpjb2xuYW1lcyhzdXJ2ZXkpW2NvbG5hbWVzKHN1cnZleSkgPT0gIllPQiJdIDwtICJ5ZWFyX2Jvcm4iDQoNCmNvbG5hbWVzKHN1cnZleSlbY29sbmFtZXMoc3VydmV5KSA9PSAiQXJ0aXN0Il0gPC0gImZhdm9yaXRlX3NvbmdfYXJ0aXN0Ig0KDQpjb2xuYW1lcyhzdXJ2ZXkpW2NvbG5hbWVzKHN1cnZleSkgPT0gIlNvbmciXSA8LSAiZmF2b3JpdGVfc29uZyINCg0KY29sbmFtZXMoc3VydmV5KVtjb2xuYW1lcyhzdXJ2ZXkpID09ICJMaW5rIHRvIHNvbmcgKG9uIFlvdXR1YmUgb3IgVmltZW8pIl0gPC0gImZhdm9yaXRlX3NvbmdfbGluayINCg0KY29sbmFtZXMoc3VydmV5KVtjb2xuYW1lcyhzdXJ2ZXkpID09ICJUaW1lc3RhbXAiXSA8LSAidGltZV9zdWJtaXR0ZWQiDQoNCg0KY29sbmFtZXMoc3VydmV5KQ0KDQpgYGANCg0KV2Ugd2FudCB0byBtYWtlIHRoZSBjb2RlIHRpZHkgc28gd2UgYXJlIGdvaW5nIHRvIHVzZSB0d28gcGFja2FnZXMgdGhhdCBjb21lIHdpdGggdGlkeXZlcnNlIGJ1dCBuZWVkIHRvIGJlIGxvYWRlZCBpbiB0byB3b3JrLg0KYGBge3J9DQpzdXBwcmVzc01lc3NhZ2VzKGxpYnJhcnkoZHBseXIpKQ0Kc3VwcHJlc3NNZXNzYWdlcyhsaWJyYXJ5KHRpZHlyKSkNCg0KYGBgDQoNCk5vdyB3ZSBhcmUgZ29pbmcgdG8gbW92ZSBpbnRvIGNyZWF0aW5nIHNlcGVyYXRlIHRhYmxlcyBmcm9tIHRoZXNlIHR3byBkYXRhZnJhbWVzIHdlIGhhdmUuIFdlIHdpbGwgZG8gdGhpcyBieSB1c2luZyBkcGx5ciBhbmQgdGliYmxlcw0KYGBge3J9DQpQZXJzb24gPC0gdGliYmxlKHRpbWVfc3VibWl0dGVkID0gc3VydmV5JHRpbWVfc3VibWl0dGVkLA0KICAgcHNldWRvbnltX2dlbmVyYXRvciA9IHN1cnZleSRwc2V1ZG9ueW1fZ2VuZXJhdG9yLA0KICAgcHNldWRvbnltID0gc3VydmV5JHBzZXVkb255bSwNCiAgIHNleCA9IHN1cnZleSRzZXgsDQogICB5ZWFyX2Jvcm4gPSBzdXJ2ZXkkeWVhcl9ib3JuLCANCiAgIGFjYWRlbWljX2xldmVsID0gc3VydmV5JGFjYWRlbWljX2xldmVsLA0KICAgYWNhZGVtaWNfbWFqb3IgPSBzdXJ2ZXkkYWNhZGVtaWNfbWFqb3IpDQoNCmNvbG5hbWVzKFBlcnNvbikNCg0KIy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQpGYXZvcml0ZVNvbmcgPC0gdGliYmxlKHBzZXVkb255bSA9IHN1cnZleSRwc2V1ZG9ueW0sDQogICAgICBzb25nX2FydGlzdCA9IHN1cnZleSRmYXZvcml0ZV9zb25nX2FydGlzdCwNCiAgICAgIGZhdm9yaXRlX3NvbmcgPSBzdXJ2ZXkkZmF2b3JpdGVfc29uZywNCiAgICAgIHNvbmdfbGluayA9IHN1cnZleSRmYXZvcml0ZV9zb25nX2xpbmspDQoNCmNvbG5hbWVzKEZhdm9yaXRlU29uZykNCg0KYGBgDQoNCg0KDQo=</div>
 
 
 
