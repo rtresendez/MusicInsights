@@ -8,6 +8,7 @@ First, we need tidyverse to handle the data importing and wrangling
 Since we already have it installed on this system we can go ahead and implement it.
 ```{r}
 suppressMessages(library(tidyverse))
+suppressMessages(library(readr))
 
 suppressMessages(survey <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/music-survey.csv"))
 
@@ -52,41 +53,65 @@ suppressMessages(library(tidyr))
 
 ```
 
-Now we are going to move into creating seperate tables from these two dataframes we have. We will do this by using dplyr and tibbles
+Now we are going to move into creating seperate tables from these two dataframes we have. We will do this by using dplyr and tibbles. We are also going to manipulate the data for a few variables to standardize them and create proper levels for categorical variables.
 ```{r}
 Person <- tibble(time_submitted = survey$time_submitted,
-   pseudonym_generator = survey$pseudonym_generator,
-   pseudonym = survey$pseudonym,
-   sex = survey$sex,
-   year_born = survey$year_born, 
-   academic_level = survey$academic_level,
-   academic_major = survey$academic_major)
+                 pseudonym_generator = survey$pseudonym_generator,
+                 pseudonym = survey$pseudonym,
+                 sex = survey$sex,
+                 year_born = survey$year_born, 
+                 academic_level = survey$academic_level,
+                 academic_major = survey$academic_major,
+                 favorite_instrument = survey$instrument_list)
+
+Person$academic_level <- as.factor(Person$academic_level)
+Person$academic_major <- as.factor(Person$academic_major)
+
+#Standardize spelling of variables for major
+levels(Person$academic_major)[levels(Person$academic_major) == "Computer information systems"] <- "Computer Information Systems"
 
 colnames(Person)
 
 #------------------------------------------------------------------
 
-FavoriteSong <- tibble(pseudonym = survey$pseudonym,
-      song_artist = survey$favorite_song_artist,
-      favorite_song = survey$favorite_song,
-      song_link = survey$favorite_song_link)
+FavoriteSong <- tibble( pseudonym = survey$pseudonym,
+                        song_artist = survey$favorite_song_artist,
+                        favorite_song = survey$favorite_song,
+                        song_link = survey$favorite_song_link)
 
 colnames(FavoriteSong)
 
+#------------------------------------------------------------------
+#This part was tricky. I manipulated the original dataframe preferences by using the gather function from Dplyr. This allowed me to lengthen data that was too wide by taking all the columns and making those rows under column name song_to_rate, then stored the ratings as keys called ratings.
+
+preferences <- preferences %>% gather(song_to_rate, rating, 3:45)
+
+#using this new manipulated preferences dataframe I can easily map the columns to my ratings tibble
+
+Ratings <- tibble(pseudonym = preferences$`What was your pseudonym?`,
+                  song_to_rate = preferences$song_to_rate,
+                  ratings = preferences$rating)
+    
+Ratings$song_to_rate <- as.factor(Ratings$song_to_rate)
+                  
+
 ```
+
+
+Time to manipulate the timestamps column in Person. We will be using a couple functions to format this column properly.
+```{r}
+
+Person$time_submitted<-as.POSIXlt(parse_datetime(Person$time_submitted, format = "%m/%d/%y %H:%M"))
+
+
+```
+
+
+
 
 
 ```{r}
 
-
-
-```
-
-
-
-
-
-```{r}
 
 
 ```
