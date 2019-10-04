@@ -1,7 +1,9 @@
 ---
 title: "Music Insights"
 author: "Reece Resendez"
-output: html_notebook
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 
 First, we need tidyverse to handle the data importing and wrangling
