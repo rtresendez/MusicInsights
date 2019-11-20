@@ -1,0 +1,72 @@
+---
+title: "Music Insight 2"
+author: "Reece Resendez"
+date: "11/14/2019"
+output: html_document
+---
+
+```{r echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, results='hide'}
+include <- function(library_name){
+  if( !(library_name %in% installed.packages()) )
+    install.packages(library_name) 
+  library(library_name, character.only=TRUE)
+}
+include("tidyverse")
+include("knitr")
+include("caret")
+purl("insight.Rmd", output = "part1.r")
+source("part1.r")
+```
+
+### Add Data to our Existing Tables.
+Here we want to create a function within the sapply function that is going to check
+each Person's list of instruments they states they could play and convert it to a numerical value for the number of instruments they play.
+
+In addition, there is a condition that checks if the Person did not submit any instruments that they play. The assigned value will then be 0.
+```{r}
+
+
+#using how many instruments they play
+
+
+Person$numOfIntruments <- sapply(Person$pseudonym, function(name){
+        
+  temp <- Person$favorite_instrument[Person$pseudonym == name]
+   
+  if(is.na(str_count(temp,","))){
+      0
+    }else{
+      str_count(temp,",") + 1
+    }
+})
+
+
+
+```
+### Multiple Linear Regression
+1. In this step we are going to create our trainging and testing cases for our model.
+We go ahead and split the data for our training set, and test set. We denote P as .75 for 75% of the data being for training and the remaining 25% for testing. These are then assigned to the respected variables.
+
+2. The next step is to used the lm function to create our model. We want to put our partitioned data and determine if our newly created continuous data can be determined based on other values within our tibble.
+
+3. The last thing we need to do is let R go ahead and do the predicting, and then we can examine the summary which will tell us if there is any good indicator for the number of instruments a Person can play. Unfortunately, there is not a good one.
+```{r}
+set.seed(124)
+#1
+training <- Person$numOfIntruments %>%
+  createDataPartition(p=.75,list=FALSE)
+train <- Person[training,]
+test <- Person[-training,]
+
+#2
+model <- lm(data=train, formula= numOfIntruments~sex+year_born+academic_major)
+
+#3
+prediction <- model %>% predict(test)
+
+summary(prediction)
+
+RMSE(prediction, test$numOfIntruments)/mean(test$numOfIntruments)
+
+
+```

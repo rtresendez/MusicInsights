@@ -1,16 +1,4 @@
----
-title: "Music Insights"
-author: "Reece Resendez"
-output:
-  pdf_document: default
-  html_notebook: default
-  html_document:
-    df_print: paged
----
-
-First, we need tidyverse to handle the data importing and wrangling
-Since we already have it installed on this system we can go ahead and implement it.
-```{r}
+## -----------------------------------------------------------------------------
 suppressMessages(library(tidyverse))
 suppressMessages(library(readr))
 
@@ -23,9 +11,9 @@ preferences <- read_csv(
   "https://raw.githubusercontent.com/introdsci/MusicSurvey/master/preferences-survey.csv"))
 
 
-```
-Now we want to go ahead and update all the column names for each of the dataframes to make referencing and appearance look better.
-```{r}
+
+
+## -----------------------------------------------------------------------------
 colnames(survey)[colnames(survey) == 
     "First, we are going to create a pseudonym for you to keep this survey anonymous (more or less). Which pseudonym generator would you prefer?"] <- "pseudonym_generator"
 
@@ -65,17 +53,15 @@ colnames(survey)[colnames(survey) ==
 
 colnames(survey)
 
-```
 
-We want to make the code tidy so we are going to use two packages that come with tidyverse but need to be loaded in to work.
-```{r}
+
+## -----------------------------------------------------------------------------
 suppressMessages(library(dplyr))
 suppressMessages(library(tidyr))
 
-```
 
-Now we are going to move into creating seperate tables from these two dataframes we have. We will do this by using dplyr and tibbles. We are also going to manipulate the data for a few variables to standardize them and create proper levels for categorical variables.
-```{r}
+
+## -----------------------------------------------------------------------------
 Person <- tibble(time_submitted = survey$time_submitted, 
     pseudonym_generator = survey$pseudonym_generator, 
     pseudonym = survey$pseudonym, sex = survey$sex, 
@@ -124,23 +110,17 @@ Ratings <- tibble(pseudonym = preferences$`What was your pseudonym?`,
     ratings = preferences$rating)
 
 Ratings$song_to_rate <- as.factor(Ratings$song_to_rate)
-```
 
 
-Time to manipulate the timestamps column in Person. We will be using a couple functions to format this column properly.
-```{r}
+## -----------------------------------------------------------------------------
 
 Person$time_submitted <- as.POSIXlt(parse_datetime(Person$time_submitted, 
     format = "%m/%d/%y %H:%M"))
 
 
-```
 
 
-
-
-
-```{r}
+## -----------------------------------------------------------------------------
 
 p <- ggplot(data=Person) + geom_bar(aes(academic_level))
 p
@@ -156,13 +136,9 @@ p2
 
 
 
-```
 
 
-Here we want to use join to get an observation for the following information.
-Pseudonym, Favorite Song, Rating
-
-```{r}
+## -----------------------------------------------------------------------------
 
 songs <- str_c(FavoriteSong$song_artist," ", FavoriteSong$favorite_song)
 songs
@@ -174,4 +150,4 @@ test <- semi_join(FavoriteSong, Ratings, by=  )
 test
 
 
-```
+
